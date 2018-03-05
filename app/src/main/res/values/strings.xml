@@ -34,4 +34,6 @@
     <string name="prove_previous_insurance">Do you have previous health coverage? \n Provide all paperwork, if applicable.</string>
     <string name="prove_pregnancy">If you are currently pregnant, do you have proof of pregnancy?</string>
     <string name="prove_immigrant_status">If you are not a U.S Citizen, do you have immigration papers? \n Examples include Green Card, Visa, Passport, DACA.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

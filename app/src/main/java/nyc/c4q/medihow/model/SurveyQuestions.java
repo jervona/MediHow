@@ -10,11 +10,4 @@ import nyc.c4q.medihow.R;
 
 public class SurveyQuestions {
     public static String[] questions= new String[7];
-
-
-
-
-
-
-
 }

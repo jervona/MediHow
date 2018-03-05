@@ -2,7 +2,6 @@ package nyc.c4q.medihow;
 
 import android.content.Intent;
 
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -11,25 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import org.json.JSONArray;
+import nyc.c4q.medihow.activities.MapsActivity;
+import nyc.c4q.medihow.activities.SignInActivity;
+import nyc.c4q.medihow.activities.SurveyActivity;
 
-import nyc.c4q.medihow.model.SurveyQuestions;
-import nyc.c4q.medihow.retrofit.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
@@ -59,8 +50,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView=findViewById(R.id.textview);
 
+        textView=findViewById(R.id.textview);
         takeTest= findViewById(R.id.eligibility_test);
         LocationButton= findViewById(R.id.find_the_nearest_location_button);
         testCard= findViewById(R.id.test_card_view);
@@ -86,16 +77,11 @@ public class MainActivity extends AppCompatActivity
         });
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        // Set default username is anonymous.
         mUsername = ANONYMOUS;
-
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         setFireBase();
         textView.setText("Hello "+ mUsername);
-
-
-
     }
 
     private void setFireBase() {
@@ -110,7 +96,6 @@ public class MainActivity extends AppCompatActivity
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
         }
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)

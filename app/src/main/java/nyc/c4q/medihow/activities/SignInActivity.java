@@ -1,4 +1,4 @@
-package nyc.c4q.medihow;
+package nyc.c4q.medihow.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,37 +12,28 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.util.Arrays;
-import java.util.List;
+import nyc.c4q.medihow.MainActivity;
+import nyc.c4q.medihow.R;
+import nyc.c4q.medihow.fragments.RegisterFragment;
 
 public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
-    EditText email,password;
+    EditText email, password;
     private FirebaseAuth mFirebaseAuth;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
@@ -63,8 +54,8 @@ public class SignInActivity extends AppCompatActivity implements
                 .build();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        email=findViewById(R.id.email);
-        password=findViewById(R.id.password);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
 
         getSupportActionBar().hide();
 
@@ -76,7 +67,7 @@ public class SignInActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        Log.e("this button is clicked",v.getId()+"");
+        Log.e("this button is clicked", v.getId() + "");
         switch (v.getId()) {
             case R.id.google_sign_in_button:
                 signIn();
@@ -84,19 +75,19 @@ public class SignInActivity extends AppCompatActivity implements
                 RegisterFragment registerFragment = new RegisterFragment();
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.sign_in_layout,registerFragment);
+                transaction.replace(R.id.sign_in_layout, registerFragment);
                 transaction.commit();
             case R.id.sign_in_button:
-               if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()){
-                   signUser(email.getText().toString(),password.getText().toString());
-                   hideSoftKeyboard();
-               }
+                if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
+                    signUser(email.getText().toString(), password.getText().toString());
+                    hideSoftKeyboard();
+                }
                 break;
         }
     }
 
-    private void signUser(String email,String password) {
-        mFirebaseAuth.signInWithEmailAndPassword(email,password)
+    private void signUser(String email, String password) {
+        mFirebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -117,15 +108,14 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 
     public void signIn() {
-        Log.e("I am starting ; " , "sign in method");
+        Log.e("I am starting ; ", "sign in method");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -150,10 +140,6 @@ public class SignInActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(SignInActivity.this, "Authentication failed.",
@@ -165,7 +151,6 @@ public class SignInActivity extends AppCompatActivity implements
                     }
                 });
     }
-
     public void hideSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(SignInActivity.this.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(password.getWindowToken(), 0);

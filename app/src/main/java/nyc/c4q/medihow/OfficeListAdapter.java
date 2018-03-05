@@ -1,5 +1,9 @@
 package nyc.c4q.medihow;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import nyc.c4q.medihow.activities.MapsActivity;
 import nyc.c4q.medihow.model.MedicareOffice;
 
 /**
@@ -18,26 +23,38 @@ public class OfficeListAdapter extends RecyclerView.Adapter<OfficeListAdapter.Li
 
     List<MedicareOffice> officeList;
 
-
-
     public OfficeListAdapter(List<MedicareOffice> officeList) {
         this.officeList = officeList;
     }
 
     @Override
     public ListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view,parent,false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
         return new ListHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ListHolder holder, int position) {
-//        MedicareOffice office = officeList.get(position);
-       MedicareOffice office = officeList.get(position);
-
+    public void onBindViewHolder(final ListHolder holder, int position) {
+        final MedicareOffice office = officeList.get(position);
         holder.businessNumber.setText(office.getPhone_number());
+        holder.businessNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent call = new Intent(Intent.ACTION_DIAL);
+                call.setData(Uri.parse("tel:" + office.getPhone_number().substring(0,';')));
+                holder.context.startActivity(call);
+            }
+        });
+
         holder.businessName.setText(office.getName_of_medical_office());
+        holder.businessName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapsActivity.moveCamera(office.getName_of_medical_office());
+            }
+        });
+
+
 
 
     }
@@ -48,11 +65,16 @@ public class OfficeListAdapter extends RecyclerView.Adapter<OfficeListAdapter.Li
     }
 
     public class ListHolder extends RecyclerView.ViewHolder {
-        TextView businessName,businessNumber;
+        TextView businessName, businessNumber;
+        CardView cardView;
+        Context context;
+
         public ListHolder(View itemView) {
             super(itemView);
-            businessName =itemView.findViewById(R.id.office_title);
-            businessNumber=itemView.findViewById(R.id.office_number);
+            context = itemView.getContext();
+            cardView = itemView.findViewById(R.id.card_view);
+            businessName = itemView.findViewById(R.id.office_title);
+            businessNumber = itemView.findViewById(R.id.office_number);
         }
     }
 }

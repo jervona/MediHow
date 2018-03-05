@@ -1,4 +1,4 @@
-package nyc.c4q.medihow;
+package nyc.c4q.medihow.fragments;
 
 
 import android.content.DialogInterface;
@@ -26,6 +26,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import nyc.c4q.medihow.MainActivity;
+import nyc.c4q.medihow.R;
+import nyc.c4q.medihow.activities.SurveyActivity;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,18 +44,13 @@ public class RegisterFragment extends Fragment implements
     private static final String TAG = "FragMent";
 
     public RegisterFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_register_, container, false);
-
         mFirebaseAuth = FirebaseAuth.getInstance();
-
         regButton = view.findViewById(R.id.reg_in_button);
         email = view.findViewById(R.id.emai_frag);
         password = view.findViewById(R.id.password_frag);
