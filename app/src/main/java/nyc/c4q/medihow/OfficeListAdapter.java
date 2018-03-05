@@ -53,10 +53,6 @@ public class OfficeListAdapter extends RecyclerView.Adapter<OfficeListAdapter.Li
                 MapsActivity.moveCamera(office.getName_of_medical_office());
             }
         });
-
-
-
-
     }
 
     @Override

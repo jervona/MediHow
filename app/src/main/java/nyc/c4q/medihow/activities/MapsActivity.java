@@ -12,9 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-
+import android.widget.ImageView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,7 +45,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static HashMap<String, LatLng> offices;
     private static GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
-    ImageButton toggle;
+
+
+    ImageView toggle;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -57,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getRetrofitCall();
         offices = new HashMap<>();
         toggle = findViewById(R.id.toggle_button);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
